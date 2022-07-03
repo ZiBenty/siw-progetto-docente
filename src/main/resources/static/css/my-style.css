@@ -1,0 +1,36 @@
+body {
+  background-color: grey;
+}
+
+nav.small-login-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: grey;
+  height: 6%;
+  
+}
+
+nav.small-login-form > span{
+  font-family: Garamond;
+  font-size: 170%;
+  padding: 1%;
+}
+
+nav.small-login-form form{
+  font-size: 103%;
+}
+
+img.header {
+  height: 90%;
+}
+
+div.header-main p {
+  color: yellow;
+  font-size: 400%;
+  font-family: Garamond;
+}
+
+p > span {
+  background-color: rgba(10, 10, 10, 0.5);
+}

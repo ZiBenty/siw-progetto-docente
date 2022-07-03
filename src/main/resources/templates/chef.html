@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
+
+<body>
+	<div>
+		<h4>Dettagli chef</h4>
+		<div>
+			<span th:text="${chef.nome}">Paolo</span>
+			<span th:text="${chef.cognome}">Rossi</span>
+			<span th:text="${chef.nazionalita}">Italia</span>
+		</div>
+	</div>
+	<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
+</body>
+
+</html>

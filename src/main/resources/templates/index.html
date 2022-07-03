@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
+
+<body>
+  <!--<nav class="small-login-form">
+    <span>Catering Service SRL</span>
+    <form th:action="@{/login}" method="POST">
+		<div>
+			<span>
+				Username:
+				<input name="username" type="text" required />
+			</span>		
+			<span>
+				Password:
+				<input name="password" type="password" required />
+			</span>
+			<span>
+				<button type="submit">Login</button>
+			</span>
+		</div>
+	</form>
+  </nav>-->
+  <!--<img class="header" th:src="@{/images/servizio-catering.jpg}"></img>-->
+	<div>
+		<h1>Catering Service</h1>
+		<p>
+		Catering Service è una realtà tutta italiana capace 
+		di affinare nel tempo, attraverso la passione per il proprio 
+		mestiere, la coesistenza delle fitte particolarità della cucina 
+		di tradizione mediterranea e regionale, con le tipicità del 
+		panorama internazionale, nell’intento di soddisfare il più vasto 
+		numero di gusti e necessità.
+		</p>
+		<p>
+		Per consultare ed usufruire subito dei nostri servizi, registrati
+        o accedi al tuo account utente.
+		</p>
+		<div >
+		    <span><a href="/register">Registrati</a></span>
+		    <span><a href="/login">Accedi</a></span>
+        </div>
+	</div>
+    
+	<footer th:replace="fragments/base.html :: fondo(home='/')"></footer>
+</body>
+
+</html>
