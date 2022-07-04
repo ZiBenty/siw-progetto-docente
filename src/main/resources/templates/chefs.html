@@ -11,22 +11,26 @@
         <th>Nazionalità</th>
         <th>Buffets</th>
         <th></th>
-        <th></th>
     </tr>
 	<tr th:each="chef : ${chefs}">
-		<td><th:block th:text="${chef.nome} + ' ' + ${chef.cognome}" /></td>
-		<td><th:block th:text="${chef.nazionalita}" /></td>
+		<td>
+		    <th:block th:text="${chef.nome} + ' ' + ${chef.cognome}" />
+		</td>
+		<td>
+		    <th:block th:text="${chef.nazionalita}" />
+		</td>
 		<th:block th:if="${not #lists.isEmpty(chef.buffets)}">
-		    <td><a href="buffets.html" th:href="@{'/buffets' + '/' + ${chef.id}}"
+		    <td><a th:href="@{'/buffets' + '/' + ${chef.id}}"
 		    th:text="Buffets"></a></td>
 		</th:block>
 		<th:block th:unless="${not #lists.isEmpty(chef.buffets)}">
 		<td>Nessun Buffet</td>
 		</th:block>
 		<td>
-		    <a href="buffetForm.html" th:href="@{'/admin/chef/edit/' + ${chef.id}}">Modifica</a>
+		    <a th:href="@{'/admin/chef/edit/' + ${chef.id}}">Modifica</a>
+		    &nbsp;
+		    <a th:href="@{'/admin/chef/delete/' + ${chef.id}}">Cancella</a>
 		</td>
-		<td></td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

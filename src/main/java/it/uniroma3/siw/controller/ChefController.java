@@ -34,6 +34,13 @@ public class ChefController {
 	      return "chefForm.html"; // ci sono errori, torna alla form iniziale
 	}
 	
+	//chiede chef con specifico id che viene dal path
+	@GetMapping("/chef/{id}")
+	public String getChef(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("chef", this.chefService.findById(id));
+		return "chef.html";
+	}
+	
 	//richiede tutte gli chefs
 	@GetMapping("/chefs")
 	public String getChefs(Model model) {
@@ -55,10 +62,10 @@ public class ChefController {
 		return "chefForm.html";
 	}
 	
-	//chiede chef con specifico id che viene dal path
-	@GetMapping("/chef/{id}")
-	public String getChef(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("chef", this.chefService.findById(id));
-		return "chef.html";
+	//cancella lo chef associato all'id nel path
+	@GetMapping("/admin/chef/delete/{id}")
+	public String deleteChef(@PathVariable("id") Long id, Model model) {
+		this.chefService.deleteById(id);
+		return "redirect:/chefs";
 	}
 }
