@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
+
+<body>
+<h4 th:text="'Elenco Buffet Chef ' + ${chef.nome} + ' ' + ${chef.cognome}"></h4>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Descrizione</th>
+        <th>Piatti</th>
+    </tr>
+	<tr th:each="buffet : ${listBuffet}">
+		<td><th:block th:text="${buffet.nome}" /></td>
+		<td><th:block th:text="${buffet.description}" /></td>
+		<th:block th:if="${not #lists.isEmpty(buffet.piatti)}">
+		<td>Piatti</td>
+		    <!--<td><a href="buffets.html" th:href="@{'/buffets' + '/' + ${chef.id}}"
+		    th:text="#lists.size(chef.buffets)"></a></td>-->
+		</th:block>
+		<th:block th:unless="${not #lists.isEmpty(buffet.piatti)}">
+		<td>Nessun Piatto</td>
+		</th:block>
+	</tr>
+</table>
+<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
+</body>
+
+</html>

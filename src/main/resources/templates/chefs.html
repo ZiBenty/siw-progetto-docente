@@ -5,24 +5,24 @@
 
 <body>
 <h4>Elenco chef</h4>
-<ul>
-	<li th:each="chef : ${chefs}">
-		<a href="chef.html" th:href="@{'/chef' + '/' + ${chef.id}}" 
-		th:text="${chef.nome} + ' ' + ${chef.cognome}">Paolo Rossi</a>
-		<!--<a href="chef.html" th:href="@{'/toDeletePersona' + '/' + ${persona.id}}" th:text="Rimuovi">Rimuovi</a>-->
-		<div th:if="${not #lists.isEmpty(chef.buffets)}">
-		buffet
-		    <!--<li th:each="buffet : ${chef.buffets}">
-		    buffet
-		        <a href="buffet.html" th:href="@{'/buffet' + '/' + ${buffet.id}}"
-		        th:text="${buffet.nome}"></a>
-		    </li>-->
-		</div>
-		<div th:unless="${not #lists.isEmpty(chef.buffets)}">
-		No buffet saved
-		</div>
-	</li>
-</ul>
+<table>
+    <tr>
+        <th>Chef</th>
+        <th>Nazionalità</th>
+        <th>Buffets</th>
+    </tr>
+	<tr th:each="chef : ${chefs}">
+		<td><th:block th:text="${chef.nome} + ' ' + ${chef.cognome}" /></td>
+		<td><th:block th:text="${chef.nazionalita}" /></td>
+		<th:block th:if="${not #lists.isEmpty(chef.buffets)}">
+		    <td><a href="buffets.html" th:href="@{'/buffets' + '/' + ${chef.id}}"
+		    th:text="Buffets"></a></td>
+		</th:block>
+		<th:block th:unless="${not #lists.isEmpty(chef.buffets)}">
+		<td>Nessun Buffet</td>
+		</th:block>
+	</tr>
+</table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
 </body>
 

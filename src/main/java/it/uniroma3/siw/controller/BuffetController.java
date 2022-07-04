@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.controller.validator.BuffetValidator;
 import it.uniroma3.siw.model.Buffet;
+import it.uniroma3.siw.model.Chef;
 import it.uniroma3.siw.service.BuffetService;
 import it.uniroma3.siw.service.ChefService;
 
@@ -62,5 +63,14 @@ public class BuffetController {
 	public String getBuffet(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("buffet", this.buffetService.findById(id));
 		return "chef.html";
+	}
+	
+	//richiede la lista dei buffet associata ad uno chef
+	@GetMapping("buffets/{id}")
+	public String getBuffets(@PathVariable("id") Long id, Model model) {
+		Chef chef = this.chefService.findById(id);
+		model.addAttribute("listBuffet", chef.getBuffets());
+		model.addAttribute("chef", chef);
+		return "buffets.html";
 	}
 }
