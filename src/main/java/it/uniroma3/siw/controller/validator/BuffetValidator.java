@@ -26,11 +26,14 @@ public class BuffetValidator implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
 		Buffet buffet = (Buffet)target;
-		List<Buffet> buffets = chefService.getAllBuffet(buffet.getChef());
-		for(Buffet b:buffets) {
-			if (b.getNome().equals(buffet.getNome())) //se lo chef ha già un buffet con lo stesso nome
-				errors.reject("duplicate");
+		//controlla che non ci sia un altro buffet con lo stesso nome per lo stesso chef
+		List<Buffet> buffets;
+		buffets = chefService.getAllBuffet(buffet.getChef());
+		if (buffets != null) {
+			for(Buffet b:buffets) {
+				if (b.getNome().equals(buffet.getNome())) //se lo chef ha già un buffet con lo stesso nome
+					errors.reject("duplicate");
+			}
 		}
 	}
-	
 }

@@ -9,9 +9,6 @@
 	<li th:each="chef : ${chefs}">
 		<a href="chef.html" th:href="@{'/chef' + '/' + ${chef.id}}" 
 		th:text="${chef.nome} + ' ' + ${chef.cognome}">Paolo Rossi</a>
-		<span><form th:action="@{'/admin/buffetForm' + '/' + ${chef.id}}" method="GET">
-		    <button type="submit">Aggiungi Buffet</button>
-		</form></span>
 		<!--<a href="chef.html" th:href="@{'/toDeletePersona' + '/' + ${persona.id}}" th:text="Rimuovi">Rimuovi</a>-->
 		<div th:if="${not #lists.isEmpty(chef.buffets)}">
 		buffet

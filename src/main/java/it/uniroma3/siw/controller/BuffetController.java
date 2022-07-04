@@ -1,6 +1,7 @@
 package it.uniroma3.siw.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.controller.validator.BuffetValidator;
 import it.uniroma3.siw.model.Buffet;
-import it.uniroma3.siw.model.Chef;
 import it.uniroma3.siw.service.BuffetService;
 import it.uniroma3.siw.service.ChefService;
 
@@ -30,19 +30,18 @@ public class BuffetController {
 	
 	//salva e ritorna la lista degli chef aggiornata con il buffet salvato
 		@PostMapping("/admin/buffet")
-	    public String newBuffet(@Valid @ModelAttribute("buffet") Buffet buffet, BindingResult buffetBindingResult,
-	    		@Valid @ModelAttribute("chef") Chef chef, BindingResult chefBindingResult, Model model) {
-			
-			buffet.setChef(chef); // aggiunge lo chef al buffet
+	    public String newBuffet(@Valid @ModelAttribute("buffet") Buffet buffet, 
+	    		BindingResult buffetBindingResult, Model model) {
 			this.buffetValidator.validate(buffet, buffetBindingResult);
-			
-			if (!buffetBindingResult.hasErrors() && !chefBindingResult.hasErrors()){ // se i dati sono corretti // trova lo chef dall'id
-			  try {
-				  chef.getBuffets().add(buffet); // aggiunge il buffet allo chef
+			if (!buffetBindingResult.hasErrors()){ // se i dati sono corretti // trova lo chef dall'id
+			  /*try {
+				  List<Buffet> buffets = chefService.getAllBuffet(buffet.getChef());
+				  buffets.add(buffet);
+				  buffet.getChef().setBuffets(buffets); // aggiunge il buffet allo chef
 			  }catch (NullPointerException e) {
-				  chef.setBuffets(new ArrayList<Buffet>());
-				  chef.getBuffets().add(buffet);
-			  }
+				  buffet.getChef().setBuffets(new ArrayList<Buffet>());
+				  buffet.getChef().getBuffets().add(buffet);
+			  }*/
 		      this.buffetService.save(buffet); // salvo un oggetto Buffet
 		      model.addAttribute("buffet", buffet);
 		      return "buffet.html";// presenta un pagina con il buffet salvato
@@ -51,10 +50,10 @@ public class BuffetController {
 		}
 	
 	//richiede la form per inserire un buffet
-	@GetMapping("/admin/buffetForm/{id}")
-	public String getBuffetForm(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/admin/buffetForm")
+	public String getBuffetForm(Model model) {
 		model.addAttribute("buffet", new Buffet());
-		model.addAttribute("chef", this.chefService.findById(id));
+		model.addAttribute("listChef", chefService.findAll());
 		return "buffetForm.html";
 	}
 	
