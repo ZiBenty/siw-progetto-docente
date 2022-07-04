@@ -23,7 +23,7 @@ public class ChefController {
 	private ChefValidator chefValidator;
 	
 	//salva e ritorna lo chef salvato
-	@PostMapping("/admin/chef")
+	@PostMapping("/admin/chef/save")
     public String newChef(@Valid @ModelAttribute("chef") Chef chef, BindingResult bindingResult, Model model) {
 		this.chefValidator.validate(chef, bindingResult);
 		if (!bindingResult.hasErrors()){ // se i dati sono corretti
@@ -42,9 +42,16 @@ public class ChefController {
 	}
 	
 	//richiede la form per inserire uno chef
-	@GetMapping("/admin/chefForm")
+	@GetMapping("/admin/chef/new")
 	public String getChefForm(Model model) {
 		model.addAttribute("chef", new Chef());
+		return "chefForm.html";
+	}
+	
+	//richiede la form per modificare i valori di uno chefù
+	@GetMapping("/admin/chef/edit/{id}")
+	public String getEditChefForm(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("chef", this.chefService.findById(id));
 		return "chefForm.html";
 	}
 	

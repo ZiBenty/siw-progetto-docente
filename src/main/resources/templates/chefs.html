@@ -10,6 +10,8 @@
         <th>Chef</th>
         <th>Nazionalità</th>
         <th>Buffets</th>
+        <th></th>
+        <th></th>
     </tr>
 	<tr th:each="chef : ${chefs}">
 		<td><th:block th:text="${chef.nome} + ' ' + ${chef.cognome}" /></td>
@@ -21,6 +23,10 @@
 		<th:block th:unless="${not #lists.isEmpty(chef.buffets)}">
 		<td>Nessun Buffet</td>
 		</th:block>
+		<td>
+		    <a href="buffetForm.html" th:href="@{'/admin/chef/edit/' + ${chef.id}}">Modifica</a>
+		</td>
+		<td></td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
