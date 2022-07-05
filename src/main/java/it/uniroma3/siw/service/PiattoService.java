@@ -2,6 +2,7 @@ package it.uniroma3.siw.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,10 @@ public class PiattoService {
 	}
 	
 	//elimina un piatto del repository
-	//WARNING: elimina anche i buffet a lui collegati
 	@Transactional
 	public void deleteById(Long id) {
 		Piatto piatto = piattoRepository.findById(id).get();
+		piatto.getBuffets().forEach(buffet -> buffet.getPiatti().remove(piatto));
 		piattoRepository.delete(piatto);
 	}
 	
@@ -45,7 +46,19 @@ public class PiattoService {
 	}
 	
 	//ritorna lista degli ingredienti del piatto
-	public List<Ingrediente> getIngredienti(Piatto piatto){
+	public Set<Ingrediente> getIngredienti(Piatto piatto){
 		return piatto.getIngredienti();
+	}
+	
+	//ritorna true se esiste già un piatto con lo stesso nome dentro un buffet
+	public boolean existsByNomeBuffet(Piatto piatto, Set<Piatto> buffet) {
+		boolean check = false;
+		for (Piatto p : buffet) {
+			if (p.getNome().equals(piatto.getNome())) {
+				check = true;
+				break;
+			}
+		}
+		return check;
 	}
 }

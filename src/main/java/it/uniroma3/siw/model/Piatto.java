@@ -1,6 +1,7 @@
 package it.uniroma3.siw.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Piatto {
@@ -22,11 +22,11 @@ public class Piatto {
 	private String description;
 	
 	@ManyToMany(mappedBy = "piatti")
-	private List<Buffet> buffets;
+	private Set<Buffet> buffets = new HashSet<Buffet>();
 	
 	//@Size(min = 1)
 	@ManyToMany
-	private List<Ingrediente> ingredienti;
+	private Set<Ingrediente> ingredienti = new HashSet<Ingrediente>();
 
 	public Long getId() {
 		return id;
@@ -52,20 +52,35 @@ public class Piatto {
 		this.description = description;
 	}
 
-	public List<Buffet> getBuffets() {
+	public Set<Buffet> getBuffets() {
 		return buffets;
 	}
 
-	public void setBuffets(List<Buffet> buffets) {
+	public void setBuffets(Set<Buffet> buffets) {
 		this.buffets = buffets;
 	}
 
-	public List<Ingrediente> getIngredienti() {
+	public Set<Ingrediente> getIngredienti() {
 		return ingredienti;
 	}
 
-	public void setIngredienti(List<Ingrediente> ingredienti) {
+	public void setIngredienti(Set<Ingrediente> ingredienti) {
 		this.ingredienti = ingredienti;
 	}
 	
+	public void removeFromBuffets() {
+		for (Buffet buffet : buffets) {
+			buffet.getPiatti().remove(this);
+		}
+	}
+	
+	public void addIngrediente(Ingrediente ingrediente) {
+		this.ingredienti.add(ingrediente);
+		ingrediente.getPiatti().add(this);
+	}
+	
+	public void removeIngrediente(Ingrediente ingrediente) {
+		this.ingredienti.remove(ingrediente);
+		ingrediente.getPiatti().remove(this);
+	}
 }

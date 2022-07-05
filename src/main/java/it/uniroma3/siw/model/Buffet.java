@@ -1,7 +1,9 @@
 package it.uniroma3.siw.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Buffet {
@@ -22,13 +23,13 @@ public class Buffet {
 	
 	private String description;
 
-	@NotNull
 	@ManyToOne
 	private Chef chef;
 	
 	//@Size(min = 1)
 	@ManyToMany
-	private List<Piatto> piatti;
+	@Column(unique = true)
+	private Set<Piatto> piatti = new HashSet<Piatto>();
 
 	public Long getId() {
 		return id;
@@ -62,12 +63,21 @@ public class Buffet {
 		this.chef = chef;
 	}
 
-	public List<Piatto> getPiatti() {
+	public Set<Piatto> getPiatti() {
 		return piatti;
 	}
 
-	public void setPiatti(List<Piatto> piatti) {
+	public void setPiatti(Set<Piatto> piatti) {
 		this.piatti = piatti;
 	}
 	
+	public void addPiatto(Piatto piatto) {
+		this.piatti.add(piatto);
+		piatto.getBuffets().add(this);
+	}
+	
+	public void removePiatto(Piatto piatto) {
+		this.piatti.remove(piatto);
+		piatto.getBuffets().remove(this);
+	}
 }

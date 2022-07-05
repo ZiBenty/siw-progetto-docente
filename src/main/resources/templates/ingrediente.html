@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
+
+<body>
+	<div>
+		<h4>Dettagli ingrediente</h4>
+		<div>
+			<span th:text="${ingrediente.nome}"></span>
+			<span th:text="${ingrediente.description}"></span>
+			<a th:href="@{'/admin/ingrediente/edit/' + ${ingrediente.id}}">Modifica</a>
+		    &nbsp;
+			<a th:href="@{'/admin/ingrediente/delete/' + ${ingrediente.id}}">Cancella</a>
+		</div>
+	</div>
+	<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
+</body>
+
+</html>

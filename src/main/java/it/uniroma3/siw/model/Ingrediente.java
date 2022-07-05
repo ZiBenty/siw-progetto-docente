@@ -1,6 +1,7 @@
 package it.uniroma3.siw.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class Ingrediente {
 	private String description;
 	
 	@ManyToMany(mappedBy = "ingredienti")
-	private List<Piatto> piatti;
+	private Set<Piatto> piatti = new HashSet<Piatto>();
 
 	public Long getId() {
 		return id;
@@ -58,12 +59,17 @@ public class Ingrediente {
 		this.description = description;
 	}
 
-	public List<Piatto> getPiatti() {
+	public Set<Piatto> getPiatti() {
 		return piatti;
 	}
 
-	public void setPiatti(List<Piatto> piatti) {
+	public void setPiatti(Set<Piatto> piatti) {
 		this.piatti = piatti;
 	}
 	
+	public void removeFromPiatti() {
+		for (Piatto piatto : piatti) {
+			piatto.getIngredienti().remove(this);
+		}
+	}
 }

@@ -2,6 +2,7 @@ package it.uniroma3.siw.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,17 @@ public class IngredienteService {
 			ingredienti.add(i);
 		}
 		return ingredienti;
+	}
+	
+	//ritorna true se esiste un ingrediente con lo stesso nome ed origine in un piatto
+	public boolean existsByNomeAndOriginePiatto(Ingrediente ingrediente, Set<Ingrediente> piatto) {
+		boolean check = false;
+		for (Ingrediente i : piatto) {
+			if (i.getNome().equals(ingrediente.getNome()) && i.getOrigine().equals(ingrediente.getOrigine())) {
+				check = true;
+				break;
+			}
+		}
+		return check;
 	}
 }

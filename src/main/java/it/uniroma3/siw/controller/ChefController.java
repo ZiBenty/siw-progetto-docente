@@ -31,7 +31,7 @@ public class ChefController {
 	      model.addAttribute("chef", chef);
 	      return "chef.html";// presenta un pagina con lo chef appena salvato
 	    } else
-	      return "chefForm.html"; // ci sono errori, torna alla form iniziale
+	      return "admin/chefForm.html"; // ci sono errori, torna alla form iniziale
 	}
 	
 	//chiede chef con specifico id che viene dal path
@@ -52,14 +52,14 @@ public class ChefController {
 	@GetMapping("/admin/chef/new")
 	public String getChefForm(Model model) {
 		model.addAttribute("chef", new Chef());
-		return "chefForm.html";
+		return "admin/chefForm.html";
 	}
 	
-	//richiede la form per modificare i valori di uno chefù
+	//richiede la form per modificare i valori di uno chef
 	@GetMapping("/admin/chef/edit/{id}")
 	public String getEditChefForm(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("chef", this.chefService.findById(id));
-		return "chefForm.html";
+		return "admin/chefForm.html";
 	}
 	
 	//cancella lo chef associato all'id nel path

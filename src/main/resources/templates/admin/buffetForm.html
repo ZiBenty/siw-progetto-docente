@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
+
+<body>
+	<div th:if="${buffet.id == null}">
+	    <h1>Aggiungi un buffet</h1>
+	</div>
+	<div th:unless="${buffet.id == null}">
+		<h1>Modifica buffet</h1>
+	</div>
+	
+	<form th:action="@{/admin/buffet}" method="POST" th:object="${buffet}">
+		<input type="hidden" th:field="*{id}" th:value="${buffet.id}" />
+		<div th:if="${#fields.hasGlobalErrors()}">
+			  <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+		</div>
+		<div>
+			<span>Nome:<input type="text" th:field="*{nome}" /></span>
+			<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+		</div>
+		<div>
+			<span>Descrizione:<input type="text" th:field="*{description}" /></span>
+			<!--<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
+		</div>
+		<div>
+		    <label>Chef:</label>
+		    <select th:field="*{chef}" required>
+		        <option th:text="${chef.nome} + ' ' + ${chef.cognome}" th:value="${chef.id}" />
+		    </select>
+		</div>
+		<div>
+			<span><button type="submit">Conferma</button></span>
+		</div>
+	</form>
+<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
+</body>
+
+</html>

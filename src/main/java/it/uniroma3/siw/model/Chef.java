@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,7 +29,7 @@ public class Chef {
 	
 	//@Size(min = 1)
 	@OneToMany(mappedBy = "chef", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-	private List<Buffet> buffets;
+	private List<Buffet> buffets = new ArrayList<Buffet>();
 
 	public Long getId() {
 		return id;

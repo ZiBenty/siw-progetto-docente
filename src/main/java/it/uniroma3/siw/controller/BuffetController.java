@@ -31,20 +31,21 @@ public class BuffetController {
     public String newBuffet(@Valid @ModelAttribute("buffet") Buffet buffet, 
     		BindingResult BindingResult, Model model) {
 		this.buffetValidator.validate(buffet, BindingResult);
-		if (!BindingResult.hasErrors()){ // se i dati sono corretti // trova lo chef dall'id
+		if (!BindingResult.hasErrors()){ // se i dati sono corretti
 	        this.buffetService.save(buffet); // salvo un oggetto Buffet
 			model.addAttribute("buffet", buffet);
 	        return "buffet.html";// presenta un pagina con il buffet salvato
 	    } else {
-	    	model.addAttribute("listChef", chefService.findAll());
-	        return "buffetForm.html"; // ci sono errori, torna alla form iniziale
+	    	model.addAttribute("chef", model.getAttribute("chef"));
+	        return "admin/buffetForm.html"; // ci sono errori, torna alla form iniziale
 	    }
     }
 
 	//chiede buffet con specifico id che viene dal path
 	@GetMapping("/buffet/{id}")
 	public String getBuffet(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("buffet", this.buffetService.findById(id));
+		Buffet buffet = this.buffetService.findById(id);
+		model.addAttribute("buffet", buffet);
 		return "buffet.html";
 	}
 	
@@ -58,26 +59,26 @@ public class BuffetController {
 	}
 		
 	//richiede la form per inserire un buffet
-	@GetMapping("/admin/buffet/new")
-	public String getBuffetForm(Model model) {
+	@GetMapping("/admin/buffet/new/{chefId}")
+	public String getBuffetForm(@PathVariable("chefId") Long chefId, Model model) {
 		model.addAttribute("buffet", new Buffet());
-		model.addAttribute("listChef", chefService.findAll());
-		return "buffetForm.html";
+		model.addAttribute("chef", this.chefService.findById(chefId));
+		return "admin/buffetForm.html";
 	}
 	
 	//richiede la form per modificare i valori di un buffet
-	@GetMapping("/admin/buffet/edit/{id}")
-	public String getEditBuffetForm(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/admin/buffet/edit/{chefId}/{id}")
+	public String getEditBuffetForm(@PathVariable("chefId") Long chefId, @PathVariable("id") Long id, Model model) {
 		model.addAttribute("buffet", this.buffetService.findById(id));
-		model.addAttribute("listChef", chefService.findAll());
-		return "buffetForm.html";
+		model.addAttribute("chef", this.chefService.findById(chefId));
+		return "admin/buffetForm.html";
 	}
 	
 	//cancella il buffet associato all'id nel path
 	@GetMapping("/admin/buffet/delete/{chefId}/{id}")
 	public String deleteBuffet(@PathVariable("chefId") Long chefId, @PathVariable("id") Long id, Model model) {
 		this.buffetService.deleteById(id);
-		return "admin/home";
+		return getBuffets(chefId, model);
 	}
 	
 }
