@@ -7,6 +7,26 @@
 	<title th:text="${title}"></title>
 </head>
 <body>
+    <header th:fragment="headerbody" class="alert alert-primary" role="alert" style="display:flex; justify-content:flex-end; flex-direction:column; font-size:90%">
+        <form th:action="@{/login}" method="POST">
+		<div>
+			<span>
+				Username:
+				<input name="username" type="text" required />
+			</span>		
+			<span>
+				Password:
+				<input name="password" type="password" required />
+			</span>
+			<span>
+				<button type="submit">Login</button>
+			</span>
+		</div>
+	    </form>
+	    <div>
+	        <span>Oppure <span><a href="/register">Registrati</a></span></span>
+	    </div>
+    </header>
 	<footer th:fragment="fondo(home)">
 		<a th:href="@{${home}}">Home</a>
 	</footer>

@@ -4,8 +4,8 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
-<h4 th:text="'Elenco Ingredienti Piatto ' + ${piatto.nome}"></h4>
-<table>
+<h4 th:text="'Elenco Ingredienti: Piatto ' + ${piatto.nome}"></h4>
+<table class="table">
     <tr>
         <th>Nome</th>
         <th>Origine</th>
@@ -17,9 +17,9 @@
 		<td><th:block th:text="${ingrediente.origine}"/></td>
 		<td><th:block th:text="${ingrediente.description}" /></td>
 		<td>
-		    <a th:href="@{'/admin/ingrediente/edit/' + ${ingrediente.id}}">Modifica</a>
+		    <a class="btn btn-success" th:href="@{'/admin/ingrediente/edit/' + ${ingrediente.id}}">Modifica</a>
 		    &nbsp;
-		    <a th:href="@{'/admin/ingrediente/delete/' + ${piatto.id} + '/' + ${ingrediente.id}}">Cancella</a>
+		    <a class="btn btn-danger" th:href="@{'/admin/ingrediente/delete/' + ${piatto.id} + '/' + ${ingrediente.id}}">Cancella</a>
 		</td>
 	</tr>
 </table>

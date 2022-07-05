@@ -21,10 +21,9 @@
 		</div>
 		<div>
 			<span>Descrizione:<input type="text" th:field="*{description}" /></span>
-			<!--<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
 		</div>
 		<div>
-			<span><button type="submit">Conferma</button></span>
+			<span><button class="btn btn-primary" type="submit">Conferma</button></span>
 		</div>
 	</form>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

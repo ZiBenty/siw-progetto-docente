@@ -5,7 +5,7 @@
 
 <body>
 <h4>Elenco chef</h4>
-<table>
+<table class="table">
     <tr>
         <th>Chef</th>
         <th>Nazionalità</th>
@@ -27,9 +27,9 @@
 		<td>Nessun Buffet</td>
 		</th:block>
 		<td>
-		    <a th:href="@{'/admin/chef/edit/' + ${chef.id}}">Modifica</a>
+		    <a class="btn btn-success" th:href="@{'/admin/chef/edit/' + ${chef.id}}">Modifica</a>
 		    &nbsp;
-		    <a th:href="@{'/admin/chef/delete/' + ${chef.id}}">Cancella</a>
+		    <a class="btn btn-danger" th:href="@{'/admin/chef/delete/' + ${chef.id}}">Cancella</a>
 		</td>
 	</tr>
 </table>

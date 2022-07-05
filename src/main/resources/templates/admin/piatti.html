@@ -4,14 +4,17 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
-<h4 th:text="'Elenco Piatti Buffet ' + ${buffet.nome}"></h4>
-<table>
+<h4 th:text="'Elenco Piatti: Buffet ' + ${buffet.nome}"></h4>
+<table class="table">
+<thead>
     <tr>
-        <th>Nome</th>
-        <th>Descrizione</th>
-        <th>Ingredienti</th>
-        <th></th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrizione</th>
+        <th scope="col">Ingredienti</th>
+        <th scope="col"></th>
     </tr>
+</thead>
+<tbody>
 	<tr th:each="piatto : ${listPiatti}">
 		<td><a th:href="@{'/piatto/' + ${piatto.id}}" th:text="${piatto.nome}" /></td>
 		<td><th:block th:text="${piatto.description}" /></td>
@@ -23,11 +26,12 @@
 		    <td>Nessun Ingrediente</td>
 		</th:block>
 		<td>
-		    <a th:href="@{'/admin/piatto/edit/' + ${piatto.id}}">Modifica</a>
+		    <a class="btn btn-success" th:href="@{'/admin/piatto/edit/' + ${piatto.id}}">Modifica</a>
 		    &nbsp;
-		    <a th:href="@{'/admin/piatto/delete/' + ${buffet.id} + '/' + ${piatto.id}}">Cancella</a>
+		    <a class="btn btn-danger" th:href="@{'/admin/piatto/delete/' + ${buffet.id} + '/' + ${piatto.id}}">Cancella</a>
 		</td>
 	</tr>
+</tbody>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
 </body>

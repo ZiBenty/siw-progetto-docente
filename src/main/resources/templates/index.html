@@ -3,25 +3,7 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
-  <!--<nav class="small-login-form">
-    <span>Catering Service SRL</span>
-    <form th:action="@{/login}" method="POST">
-		<div>
-			<span>
-				Username:
-				<input name="username" type="text" required />
-			</span>		
-			<span>
-				Password:
-				<input name="password" type="password" required />
-			</span>
-			<span>
-				<button type="submit">Login</button>
-			</span>
-		</div>
-	</form>
-  </nav>-->
-  <!--<img class="header" th:src="@{/images/servizio-catering.jpg}"></img>-->
+    <header th:replace="fragments/base.html :: headerbody"></header>
 	<div>
 		<h1>Catering Service</h1>
 		<p>
@@ -36,10 +18,6 @@
 		Per consultare ed usufruire subito dei nostri servizi, registrati
         o accedi al tuo account utente.
 		</p>
-		<div >
-		    <span><a href="/register">Registrati</a></span>
-		    <span><a href="/login">Accedi</a></span>
-        </div>
 	</div>
     
 	<footer th:replace="fragments/base.html :: fondo(home='/')"></footer>
