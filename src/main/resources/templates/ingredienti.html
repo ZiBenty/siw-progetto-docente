@@ -10,17 +10,11 @@
         <th>Nome</th>
         <th>Origine</th>
         <th>Descrizione</th>
-        <th></th>
     </tr>
 	<tr th:each="ingrediente : ${listIngrediente}">
 		<td><a th:href="@{'/ingrediente/' + ${ingrediente.id}}" th:text="${ingrediente.nome}" /></td>
 		<td><th:block th:text="${ingrediente.origine}"/></td>
 		<td><th:block th:text="${ingrediente.description}" /></td>
-		<td>
-		    <a th:href="@{'/admin/ingrediente/edit/' + ${ingrediente.id}}">Modifica</a>
-		    &nbsp;
-		    <a th:href="@{'/admin/ingrediente/delete/' + ${piatto.id} + '/' + ${ingrediente.id}}">Cancella</a>
-		</td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

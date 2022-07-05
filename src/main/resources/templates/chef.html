@@ -13,9 +13,6 @@
 			<a th:href="@{'/buffets' + '/' + ${chef.id}}"
 		    th:text="Buffets"></a>
 		</div>
-		<div>
-			<a th:href="@{'/admin/buffet/new/' + ${chef.id}}">Inserisci un nuovo Buffet</a>
-   		</div>
 	</div>
 	<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
 </body>

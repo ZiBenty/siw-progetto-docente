@@ -3,9 +3,12 @@
 	<head th:replace="fragments/base.html :: headerfiles(title='SIW')"> </head>
 <body>
     <div>
-    	<h4">Menu</h4>
+    	<h4>Menu</h4>
 		<div>
-			<a href="chefs" th:href="@{/chefs}">Elenco chef</a>
+			<a th:href="@{/chefs}">Elenco chef</a>
+   		</div>
+   		<div>
+   		    <a th:href="@{/buffets}">Elenco buffets</a>
    		</div>
    		<div>
 			<a th:href="@{/logout}">Logout</a>

@@ -10,7 +10,6 @@
         <th>Nome</th>
         <th>Descrizione</th>
         <th>Ingredienti</th>
-        <th></th>
     </tr>
 	<tr th:each="piatto : ${listPiatti}">
 		<td><a th:href="@{'/piatto/' + ${piatto.id}}" th:text="${piatto.nome}" /></td>
@@ -22,11 +21,6 @@
 		<th:block th:unless="${not #lists.isEmpty(piatto.ingredienti)}">
 		    <td>Nessun Ingrediente</td>
 		</th:block>
-		<td>
-		    <a th:href="@{'/admin/piatto/edit/' + ${piatto.id}}">Modifica</a>
-		    &nbsp;
-		    <a th:href="@{'/admin/piatto/delete/' + ${buffet.id} + '/' + ${piatto.id}}">Cancella</a>
-		</td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

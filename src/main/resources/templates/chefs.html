@@ -10,7 +10,6 @@
         <th>Chef</th>
         <th>Nazionalità</th>
         <th>Buffets</th>
-        <th></th>
     </tr>
 	<tr th:each="chef : ${chefs}">
 		<td>
@@ -26,11 +25,6 @@
 		<th:block th:unless="${not #lists.isEmpty(chef.buffets)}">
 		<td>Nessun Buffet</td>
 		</th:block>
-		<td>
-		    <a th:href="@{'/admin/chef/edit/' + ${chef.id}}">Modifica</a>
-		    &nbsp;
-		    <a th:href="@{'/admin/chef/delete/' + ${chef.id}}">Cancella</a>
-		</td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

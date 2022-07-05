@@ -8,6 +8,7 @@
 		<h4>Dettagli ingrediente</h4>
 		<div>
 			<span th:text="${ingrediente.nome}"></span>
+			<span th:text="${ingrediente.origine}"></span>
 			<span th:text="${ingrediente.description}"></span>
 			<a th:href="@{'/admin/ingrediente/edit/' + ${ingrediente.id}}">Modifica</a>
 		    &nbsp;

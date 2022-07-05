@@ -3,6 +3,8 @@ package it.uniroma3.siw.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.controller.validator.IngredienteValidator;
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Ingrediente;
 import it.uniroma3.siw.model.Piatto;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredienteService;
 import it.uniroma3.siw.service.PiattoService;
 
@@ -25,6 +29,8 @@ public class IngredienteController {
 	private PiattoService piattoService;
 	@Autowired
 	private IngredienteValidator ingredienteValidator;
+	@Autowired 
+	private CredentialsService credentialsService;
 	
 	//salva l'ingrediente e lo aggiunge al piatto passato nel path, poi ritorna le info sull'ingrediente
 	@PostMapping("/admin/ingrediente/{piattoId}")
@@ -65,7 +71,13 @@ public class IngredienteController {
 	@GetMapping("/ingrediente/{id}")
 	public String getIngrediente(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("ingrediente", this.ingredienteService.findById(id));
-		return "ingrediente.html";
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+			return "admin/ingrediente.html";
+		} else {
+			return "ingrediente.html";
+		}
 	}
 	
 	//richiede la lista dei ingredienti associata ad un piatto
@@ -74,7 +86,13 @@ public class IngredienteController {
 		Piatto piatto = this.piattoService.findById(id);
 		model.addAttribute("listIngrediente", piatto.getIngredienti());
 		model.addAttribute("piatto", piatto);
-		return "ingredienti.html";
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+			return "admin/ingredienti.html";
+		} else {
+			return "ingredienti.html";
+		}
 	}
 		
 	//richiede la form per inserire un ingrediente
