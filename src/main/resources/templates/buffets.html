@@ -10,6 +10,7 @@
         <th>Nome</th>
         <th>Descrizione</th>
         <th>Piatti</th>
+        <th></th>
     </tr>
 	<tr th:each="buffet : ${listBuffet}">
 		<td><th:block th:text="${buffet.nome}" /></td>
@@ -22,6 +23,11 @@
 		<th:block th:unless="${not #lists.isEmpty(buffet.piatti)}">
 		<td>Nessun Piatto</td>
 		</th:block>
+		<td>
+		    <a th:href="@{'/admin/buffet/edit/' + ${buffet.id}}">Modifica</a>
+		    &nbsp;
+		    <a th:href="@{'/admin/buffet/delete/'+ ${chef.id} + '/' + ${buffet.id}}">Cancella</a>
+		</td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

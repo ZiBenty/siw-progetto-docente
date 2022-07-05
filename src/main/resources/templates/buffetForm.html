@@ -4,9 +4,15 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
-	<h1>Aggiungi un buffet</h1>
+	<div th:if="${buffet.id == null}">
+	    <h1>Aggiungi un buffet</h1>
+	</div>
+	<div th:unless="${buffet.id == null}">
+		<h1>Modifica buffet</h1>
+	</div>
 	
 	<form th:action="@{/admin/buffet}" method="POST" th:object="${buffet}">
+		<input type="hidden" th:field="*{id}" th:value="${buffet.id}" />
 		<div th:if="${#fields.hasGlobalErrors()}">
 			  <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
 		</div>

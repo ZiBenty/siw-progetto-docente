@@ -22,10 +22,11 @@ public class BuffetService {
 		buffetRepository.save(buffet);
 	}
 	
-	//elimina un buffet del repository
+	//elimina un buffet dal repository, staccandolo prima dallo chef
 	@Transactional
 	public void deleteById(Long id) {
 		Buffet buffet = buffetRepository.findById(id).get();
+		buffet.getChef().getBuffets().remove(buffet);
 		buffetRepository.delete(buffet);
 	}
 	

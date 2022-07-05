@@ -1,6 +1,5 @@
 package it.uniroma3.siw.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,7 +27,7 @@ public class Chef {
 	private String nazionalita;
 	
 	//@Size(min = 1)
-	@OneToMany(mappedBy = "chef", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "chef", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	private List<Buffet> buffets;
 
 	public Long getId() {

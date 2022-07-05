@@ -22,6 +22,7 @@ public class Buffet {
 	
 	private String description;
 
+	@NotNull
 	@ManyToOne
 	private Chef chef;
 	
@@ -68,6 +69,5 @@ public class Buffet {
 	public void setPiatti(List<Piatto> piatti) {
 		this.piatti = piatti;
 	}
-	
 	
 }
