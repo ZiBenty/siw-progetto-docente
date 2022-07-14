@@ -2,19 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="fragments/base.html :: headerfiles(title='SIW')"> </head>
 <body>
+    <header th:replace="fragments/base.html :: headerbody"></header>
     <div>
     	<h4>Menu</h4>
-		<div>
-			<a th:href="@{/chefs}">Elenco chef</a>
-   		</div>
-   		<div>
-   		    <a th:href="@{/buffets}">Elenco buffets</a>
-   		</div>
-   		<div>
-			<a th:href="@{/logout}">Logout</a>
-   		</div>
-   		
+		<form th:action="@{/chefs}" method="GET">
+			<button type="submit">Elenco chef</button>
+   		</form>
+   		<form th:action="@{/buffets}" method="GET">
+			<button type="submit">Elenco buffet</button>
+   		</form>
+   		<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/admin/chef/new}" method="GET">
+			<button type="submit">Inserisci un nuovo chef</button>
+   		</form>
     </div>
-    <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
 </body>
 </html>

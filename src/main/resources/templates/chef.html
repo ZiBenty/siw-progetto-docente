@@ -4,6 +4,7 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
+    <header th:replace="fragments/base.html :: headerbody"></header>
 	<div>
 		<h4>Dettagli chef</h4>
 		<div>
@@ -13,6 +14,9 @@
 			<a th:href="@{'/buffets' + '/' + ${chef.id}}"
 		    th:text="Buffets"></a>
 		</div>
+		<div sec:authorize="hasAuthority('ADMIN')">
+			<a th:href="@{'/admin/buffet/new/' + ${chef.id}}">Inserisci un nuovo Buffet</a>
+   		</div>
 	</div>
 	<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
 </body>

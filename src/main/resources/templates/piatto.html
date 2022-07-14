@@ -4,11 +4,20 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
+    <header th:replace="fragments/base.html :: headerbody"></header>
 	<div>
 		<h4>Dettagli piatto</h4>
 		<div>
 			<span th:text="${piatto.nome}"></span>
 			<span th:text="${piatto.description}"></span>
+			<div sec:authorize="hasAuthority('ADMIN')">
+				<a th:href="@{'/admin/piatto/edit/' + ${piatto.id}}">Modifica</a>
+			    &nbsp;
+				<a th:href="@{'/admin/piatto/delete/' + ${piatto.id}}">Cancella</a>
+			</div>
+			<div sec:authorize="hasAuthority('ADMIN')">
+				<a th:href="@{'/admin/ingrediente/new/' + ${piatto.id}}">Inserisci un nuovo Ingrediente</a>
+   		    </div>
 		</div>
 	</div>
 	<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

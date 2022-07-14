@@ -4,12 +4,18 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
+    <header th:replace="fragments/base.html :: headerbody"></header>
 	<div>
 		<h4>Dettagli ingrediente</h4>
 		<div>
 			<span th:text="${ingrediente.nome}"></span>
 			<span th:text="${ingrediente.origine}"></span>
 			<span th:text="${ingrediente.description}"></span>
+			<div sec:authorize="hasAuthority('ADMIN')">
+				<a th:href="@{'/admin/ingrediente/edit/' + ${ingrediente.id}}">Modifica</a>
+			    &nbsp;
+				<a th:href="@{'/admin/ingrediente/delete/' + ${ingrediente.id}}">Cancella</a>
+			</div>
 		</div>
 	</div>
 	<footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

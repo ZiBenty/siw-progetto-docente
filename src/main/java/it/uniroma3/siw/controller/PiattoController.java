@@ -3,8 +3,6 @@ package it.uniroma3.siw.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,10 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.controller.validator.PiattoValidator;
 import it.uniroma3.siw.model.Buffet;
-import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Piatto;
 import it.uniroma3.siw.service.BuffetService;
-import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.PiattoService;
 
 @Controller
@@ -29,8 +25,6 @@ public class PiattoController {
 	private PiattoService piattoService;
 	@Autowired
 	private PiattoValidator piattoValidator;
-	@Autowired 
-	private CredentialsService credentialsService;
 	
 	//salva il piatto e lo aggiunge al buffet passato nel path, poi ritorna le info sul piatto
 	@PostMapping("/admin/piatto/{buffetId}")
@@ -70,28 +64,16 @@ public class PiattoController {
 	@GetMapping("/piatto/{id}")
 	public String getPiatto(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("piatto", this.piattoService.findById(id));
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/piatto.html";
-		} else {
-			return "piatto.html";
-		}
+		return "piatto.html";
 	}
 	
 	//richiede la lista dei piatti associata ad un buffet
-	@GetMapping("piatti/{id}")
+	@GetMapping("/piatti/{id}")
 	public String getPiatti(@PathVariable("id") Long id, Model model) {
 		Buffet buffet = this.buffetService.findById(id);
 		model.addAttribute("listPiatti", buffet.getPiatti());
 		model.addAttribute("buffet", buffet);
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/piatti.html";
-		} else {
-			return "piatti.html";
-		}
+		return "piatti.html";
 	}
 		
 	//richiede la form per inserire un piatto
@@ -115,6 +97,6 @@ public class PiattoController {
 		Piatto piatto = this.piattoService.findById(id);
 		piatto.removeFromBuffets();
 		this.piattoService.deleteById(id);
-		return getPiatti(buffetId, model);
+		return "redirect:/piatti/" + buffetId;
 	}
 }

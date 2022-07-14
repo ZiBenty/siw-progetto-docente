@@ -3,8 +3,6 @@ package it.uniroma3.siw.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.controller.validator.ChefValidator;
 import it.uniroma3.siw.model.Chef;
-import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.service.ChefService;
-import it.uniroma3.siw.service.CredentialsService;
 
 @Controller
 public class ChefController {
@@ -25,8 +21,6 @@ public class ChefController {
 	private ChefService chefService;
 	@Autowired
 	private ChefValidator chefValidator;
-	@Autowired 
-	private CredentialsService credentialsService;
 	
 	//salva e ritorna lo chef salvato
 	@PostMapping("/admin/chef/save")
@@ -44,26 +38,14 @@ public class ChefController {
 	@GetMapping("/chef/{id}")
 	public String getChef(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("chef", this.chefService.findById(id));
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-		    return "admin/chef.html";
-		} else {
-			return "chef.html";
-		}
+		return "chef.html";
 	}
 	
 	//richiede tutte gli chefs
 	@GetMapping("/chefs")
 	public String getChefs(Model model) {
 		model.addAttribute("chefs", chefService.findAll());
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/chefs.html";
-		} else {
-			return "chefs.html";
-		}
+		return "chefs.html";
 	}
 	
 	//richiede la form per inserire uno chef

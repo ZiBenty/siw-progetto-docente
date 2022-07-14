@@ -4,12 +4,14 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
+<header th:replace="fragments/base.html :: headerbody"></header>
 <h4>Elenco chef</h4>
 <table>
     <tr>
         <th>Chef</th>
         <th>Nazionalità</th>
         <th>Buffets</th>
+        <th sec:authorize="hasAuthority('ADMIN')"></th>
     </tr>
 	<tr th:each="chef : ${chefs}">
 		<td>
@@ -25,6 +27,11 @@
 		<th:block th:unless="${not #lists.isEmpty(chef.buffets)}">
 		<td>Nessun Buffet</td>
 		</th:block>
+		<td sec:authorize="hasAuthority('ADMIN')">
+		    <a class="btn btn-success" th:href="@{'/admin/chef/edit/' + ${chef.id}}">Modifica</a>
+		    &nbsp;
+		    <a class="btn btn-danger" th:href="@{'/admin/chef/delete/' + ${chef.id}}">Cancella</a>
+		</td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

@@ -3,8 +3,6 @@ package it.uniroma3.siw.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.controller.validator.BuffetValidator;
 import it.uniroma3.siw.model.Buffet;
 import it.uniroma3.siw.model.Chef;
-import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.service.BuffetService;
 import it.uniroma3.siw.service.ChefService;
-import it.uniroma3.siw.service.CredentialsService;
 
 @Controller
 public class BuffetController {
@@ -29,8 +25,6 @@ public class BuffetController {
 	private ChefService chefService;
 	@Autowired
 	private BuffetValidator buffetValidator;
-	@Autowired 
-	private CredentialsService credentialsService;
 	
 	//salva e ritorna la lista degli chef aggiornata con il buffet salvato
 	@PostMapping("/admin/buffet")
@@ -52,13 +46,7 @@ public class BuffetController {
 	public String getBuffet(@PathVariable("id") Long id, Model model) {
 		Buffet buffet = this.buffetService.findById(id);
 		model.addAttribute("buffet", buffet);
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/buffet.html";
-		} else {
-			return "buffet.html";
-		}
+		return "buffet.html";
 	}
 	
 	//richiede la lista dei buffet associata ad uno chef
@@ -67,13 +55,7 @@ public class BuffetController {
 		Chef chef = this.chefService.findById(id);
 		model.addAttribute("listBuffet", chef.getBuffets());
 		model.addAttribute("chef", chef);
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/buffets.html";
-		} else {
-			return "buffets.html";
-		}
+	    return "buffets.html";
 	}
 	
 	//richiede la vista di tutti i buffet salvati sul database
@@ -103,7 +85,7 @@ public class BuffetController {
 	@GetMapping("/admin/buffet/delete/{chefId}/{id}")
 	public String deleteBuffet(@PathVariable("chefId") Long chefId, @PathVariable("id") Long id, Model model) {
 		this.buffetService.deleteById(id);
-		return getBuffetsChef(chefId, model);
+		return "redirect:/buffets/" + chefId;
 	}
 	
 }

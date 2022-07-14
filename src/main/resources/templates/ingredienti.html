@@ -4,17 +4,24 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
+<header th:replace="fragments/base.html :: headerbody"></header>
 <h4 th:text="'Elenco Ingredienti Piatto ' + ${piatto.nome}"></h4>
 <table>
     <tr>
         <th>Nome</th>
         <th>Origine</th>
         <th>Descrizione</th>
+        <th sec:authorize="hasAuthority('ADMIN')"></th>
     </tr>
 	<tr th:each="ingrediente : ${listIngrediente}">
 		<td><a th:href="@{'/ingrediente/' + ${ingrediente.id}}" th:text="${ingrediente.nome}" /></td>
 		<td><th:block th:text="${ingrediente.origine}"/></td>
 		<td><th:block th:text="${ingrediente.description}" /></td>
+		<td sec:authorize="hasAuthority('ADMIN')">
+		    <a class="btn btn-success" th:href="@{'/admin/ingrediente/edit/' + ${ingrediente.id}}">Modifica</a>
+		    &nbsp;
+		    <a class="btn btn-danger" th:href="@{'/admin/ingrediente/delete/' + ${piatto.id} + '/' + ${ingrediente.id}}">Cancella</a>
+		</td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>

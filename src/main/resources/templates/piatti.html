@@ -4,12 +4,14 @@
 <head th:replace="fragments/base.html :: headerfiles(title='Catering Service')"> </head>
 
 <body>
+<header th:replace="fragments/base.html :: headerbody"></header>
 <h4 th:text="'Elenco Piatti Buffet ' + ${buffet.nome}"></h4>
 <table>
     <tr>
         <th>Nome</th>
         <th>Descrizione</th>
         <th>Ingredienti</th>
+        <th sec:authorize="hasAuthority('ADMIN')"></th>
     </tr>
 	<tr th:each="piatto : ${listPiatti}">
 		<td><a th:href="@{'/piatto/' + ${piatto.id}}" th:text="${piatto.nome}" /></td>
@@ -21,6 +23,11 @@
 		<th:block th:unless="${not #lists.isEmpty(piatto.ingredienti)}">
 		    <td>Nessun Ingrediente</td>
 		</th:block>
+		<td sec:authorize="hasAuthority('ADMIN')">
+		    <a class="btn btn-success" th:href="@{'/admin/piatto/edit/' + ${piatto.id}}">Modifica</a>
+		    &nbsp;
+		    <a class="btn btn-danger" th:href="@{'/admin/piatto/delete/' + ${buffet.id} + '/' + ${piatto.id}}">Cancella</a>
+		</td>
 	</tr>
 </table>
 <footer th:replace="fragments/base.html :: fondo(home='/default')"></footer>
